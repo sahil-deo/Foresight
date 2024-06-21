@@ -11,6 +11,8 @@ public class gameControllerScript : MonoBehaviour
 
     public GameObject iL, iR, iU, iD;
     public Transform indicatorPos;
+    public AudioClip click, click2, goal;
+    public AudioSource source;
 
     public static int iCount;
 
@@ -30,6 +32,9 @@ public class gameControllerScript : MonoBehaviour
 
     public void spawnIndicator(GameObject _indicator)
     {
+        source.clip = click;
+        source.Play();
+
         newIndicator = Instantiate(_indicator, indicatorPos.position, quaternion.identity);
         iCount++;
 

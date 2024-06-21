@@ -37,6 +37,8 @@ public class playerScript : MonoBehaviour
         GoToDestination();
         if (Input.GetKeyDown(KeyCode.Space) && !started)
         {
+            gc.source.clip = gc.click2;
+            gc.source.Play();
             started = true;
             StartCoroutine(Execute());
         }
@@ -137,7 +139,7 @@ public class playerScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Win"))
+        if (other.gameObject.CompareTag("Goal"))
         {
             reached = true;
         }

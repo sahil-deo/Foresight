@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Indicator
+  - Goal
   layers:
   - Default
   - TransparentFX
