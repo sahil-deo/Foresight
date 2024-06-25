@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static Unity.VisualScripting.Member;
 
 public class playerScript : MonoBehaviour
 {
@@ -11,7 +13,9 @@ public class playerScript : MonoBehaviour
 
 
 
-    bool started, reached;
+    public bool started;
+
+    bool reached;
 
 
     gameControllerScript gc;
@@ -35,18 +39,27 @@ public class playerScript : MonoBehaviour
     {
         Move();
         GoToDestination();
-        if (Input.GetKeyDown(KeyCode.Space) && !started)
+        if (gameControllerScript.levelStarted && !started)
         {
-            gc.source.clip = gc.click2;
-            gc.source.Play();
             started = true;
             StartCoroutine(Execute());
         }
     }
+
     void Move()
     {
 
         if (started) return;
+
+        if (gameControllerScript.isIndicatorsHidden && (
+            Input.GetKeyDown(KeyCode.W) || 
+            Input.GetKeyDown(KeyCode.A) || 
+            Input.GetKeyDown(KeyCode.S) || 
+            Input.GetKeyDown(KeyCode.D)))
+        {
+            gc.clearIndicators();
+            moves.Clear();
+        }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -68,6 +81,29 @@ public class playerScript : MonoBehaviour
         {
             gc.spawnIndicator(gc.iR);
             moves.Add(4);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ClearMoves();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //Go Back a move
+            BackSpaceMove();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Start
+            gc.startLevelButton();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gc.reuseMovesButton();
         }
     }
 
@@ -124,7 +160,7 @@ public class playerScript : MonoBehaviour
         }
         else
         {
-            Invoke("Restart", 1f);
+            Invoke("NextLevel", 1f);
         }
 
     }
@@ -150,9 +186,46 @@ public class playerScript : MonoBehaviour
     {
         transform.position = _start.position;
         started = false;
+        gameControllerScript.levelStarted = false;
         Destination = transform.position;
-        moves.Clear();
         reached = false;
-        gc.clearIndicators();
+        gc.hideIndicators();
     }
+
+    void NextLevel()
+    {
+        if(SceneManager.GetActiveScene().buildIndex == (SceneManager.sceneCountInBuildSettings-1))
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void ClearMoves()
+    {
+        gc.source.clip = gc.click2;
+        gc.source.Play();
+
+        
+        gc.clearIndicators();
+
+        moves.Clear();
+    }
+
+    public void BackSpaceMove()
+    {
+
+        if (gc.indicators.Count == 0) return;
+
+        gc.source.clip = gc.click2;
+        gc.source.Play();
+
+        moves.RemoveAt(moves.Count - 1);
+        gc.backSpaceIndicator();
+
+    }
+
+    
 }

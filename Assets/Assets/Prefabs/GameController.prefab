@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1580168709793620227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6056942046033167069}
+  - component: {fileID: 6656558271671962956}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6056942046033167069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580168709793620227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.2648487, y: 2.1470253, z: -0.035307556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6656558271671962956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580168709793620227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5c22adac6902249b7a32f324d740a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iL: {fileID: 2954580291251095111, guid: aecff0b097d21d84a9278d5349504892, type: 3}
+  iR: {fileID: 6572185057316805628, guid: 2d4a616f4ca106f408a690abf02813d9, type: 3}
+  iU: {fileID: 914980541940747530, guid: 345e75a2ab9d8174587b08e14b9ab117, type: 3}
+  iD: {fileID: 3622975979324896163, guid: fa7f815310e16a8439e916bc00d5f90f, type: 3}
+  indicatorPos: {fileID: 0}
+  click: {fileID: 8300000, guid: 974dcb96457f8c4419d6461868577d10, type: 3}
+  click2: {fileID: 8300000, guid: abfb4ada4ea25244b81c8d5c3298be01, type: 3}
+  goal: {fileID: 8300000, guid: dd2bbd1330c004548833c639e9ae2ef1, type: 3}
+  source: {fileID: 0}
+  startButton: {fileID: 0}
+  indicators: []
