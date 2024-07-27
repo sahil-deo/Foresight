@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Unity.VisualScripting.Member;
 
 public class playerScript : MonoBehaviour
 {
@@ -11,6 +9,7 @@ public class playerScript : MonoBehaviour
 
     public Transform _start;
 
+    private Animator anim;
 
 
     public bool started;
@@ -29,6 +28,7 @@ public class playerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();    
         gc = GameObject.Find("GameController").GetComponent<gameControllerScript>();
         started = false;
         Destination = transform.position;
@@ -37,6 +37,12 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (gameControllerScript.isMenuOpen && Input.GetKeyDown(KeyCode.Escape)) gc.closeMenuButton();
+        else if (!gameControllerScript.isMenuOpen && Input.GetKeyDown(KeyCode.Escape)) gc.menuButton();
+
+        if (gameControllerScript.isMenuOpen) return;
+
         Move();
         GoToDestination();
         if (gameControllerScript.levelStarted && !started)
@@ -122,14 +128,20 @@ public class playerScript : MonoBehaviour
 
         for (int i = 0; i < moves.Count; i++)
         {
-            if (!started) break;
+            if (!started)
+            {
+                anim.Play("stop");
+                break;
+            }
 
             int move = moves[i];
+            anim.Play("move");
 
             while (Vector2.Distance(transform.position, Destination) != 0)
             {
                 yield return null;
             }
+            anim.Play("stop");
 
 
             switch (move)

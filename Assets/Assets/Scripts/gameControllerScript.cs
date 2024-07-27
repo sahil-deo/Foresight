@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.iOS;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class gameControllerScript : MonoBehaviour
@@ -20,7 +19,6 @@ public class gameControllerScript : MonoBehaviour
         goal;
 
     public AudioSource source;
-    
 
     public static int iCount;
     
@@ -29,11 +27,13 @@ public class gameControllerScript : MonoBehaviour
         isIndicatorsHidden;
 
 
+    public GameObject menu;
     public GameObject startButton;
 
     public List<GameObject> indicators = new List<GameObject>();
 
-
+    static bool soundOn = true;
+    public static bool isMenuOpen = false;
     
     private GameObject newIndicator;
 
@@ -44,7 +44,16 @@ public class gameControllerScript : MonoBehaviour
         levelStarted = false;
         isIndicatorsHidden = false;
 
-        startButton.GetComponent<Button>().enabled = true; 
+        startButton.GetComponent<Button>().enabled = true;
+
+        if (soundOn)
+        {
+            source.volume = 80;
+        }
+        else
+        {
+            source.volume = 0;
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +63,7 @@ public class gameControllerScript : MonoBehaviour
         {
             startButton.GetComponent<Button>().enabled = true;
         }
+
     }
 
     public void spawnIndicator(GameObject _indicator)
@@ -138,9 +148,57 @@ public class gameControllerScript : MonoBehaviour
         GameObject.Find("Player").GetComponent<playerScript>().BackSpaceMove();
     }
 
+    public void menuButton()
+    {
+        source.clip = click2;
+        source.Play();
+        menu.gameObject.SetActive(true);
+        Time.timeScale = 0;
+        isMenuOpen = true;
+    }
+
+    public void closeMenuButton()
+    {
+        source.clip = click2;
+        source.Play();
+        GameObject menu = GameObject.Find("menu");
+        menu.SetActive(false);
+        Time.timeScale = 1;
+        isMenuOpen = false;
+
+    }
+
+    public void soundButton()
+    {
+        if (!soundOn)
+        {
+            source.clip = click2;
+            source.Play();
+            soundOn = true;
+            source.volume = 80;
+        }
+        else
+        {
+            soundOn = false;
+            source.volume = 0;
+        }
+    }
+
+    public void HelpButton()
+    {
+        source.clip = click2;
+        source.Play();
+        SceneManager.LoadScene(1);
+    }
+
+    public void Menu()
+    {
+        source.clip = click2;
+        source.Play();
+        SceneManager.LoadScene("Menu");
+    }
 
     //Helper Function
-    [HideInInspector]
     public void backSpaceIndicator()
     {
         if (indicators.Count == 0) return; 
